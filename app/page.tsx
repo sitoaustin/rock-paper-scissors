@@ -24,7 +24,12 @@ export default function Home() {
 
   // Played state
   const [played, setPlayed] = useState(false);
+
+  // Computer state
   const [computerTurn, setComputerTurn] = useState(false);
+  const [computerPaper, setComputerPaper] = useState(false);
+  const [computerScissors, setComputureScissors] = useState(false);
+  const [computerRock, setComputureRock] = useState(false);
 
   // Game Play
   const [rock, setRock] = useState(false);
@@ -51,14 +56,31 @@ export default function Home() {
   useEffect(() => {
     if (played) {
       const timeoutId = setTimeout(() => {
-        console.log('I just played');
+        function getRandomInteger(min: number, max: number) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        const randomInt = getRandomInteger(0, 1);
+        if (rock && randomInt === 0) {
+          setComputerPaper(true);
+        } else if (rock && randomInt === 1) {
+          setComputureScissors(true);
+        } else if (paper && randomInt == 0) {
+          setComputureScissors(true);
+        } else if (paper && randomInt == 1) {
+          setComputureRock(true);
+        } else if (scissors && randomInt == 0) {
+          setComputureRock(true);
+        } else if (scissors && randomInt == 1) {
+          setComputerPaper(true);
+        }
       }, 2000);
 
       return () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [played]);
+  }, [played, rock, paper, scissors]);
 
   return (
     <main className={barlow.className}>
@@ -116,18 +138,43 @@ export default function Home() {
               height={500}
               className='w-[200px] opacity-0'
             />
-            <div
-              className={`bg-white border-[10px] ${
-                paper && 'border-blue-800'
-              } ${rock && 'border-red-500'} ${
-                scissors && 'border-yellow-500'
-              } w-[120px] h-[120px] rounded-full absolute left-0 top-[-50%] translate-y-[40%] flex items-center justify-center`}
-            >
-              {paper && <Paper />}
-              {rock && <Rock />}
-              {scissors && <Scissors />}
+            <div className='absolute left-0 top-[-50%] translate-y-[30%]'>
+              <div
+                className={`bg-white border-[10px] ${
+                  paper && 'border-blue-800'
+                } ${rock && 'border-red-500'} ${
+                  scissors && 'border-yellow-500'
+                } w-[120px] h-[120px] rounded-full  flex items-center justify-center`}
+              >
+                {paper && <Paper />}
+                {rock && <Rock />}
+                {scissors && <Scissors />}
+              </div>
+              <div className='w-full flex justify-center'>
+                <p className='text-white font-semibold text[14px] mt-5'>
+                  YOU PICKED
+                </p>
+              </div>
             </div>
-            {/* <div className='bg-white border-[10px] border-yellow-500 w-[120px] h-[120px] rounded-full absolute right-0 top-[-50%] translate-y-[40%] flex items-center justify-center'></div> */}
+            <div className='absolute right-0 top-[-50%] translate-y-[30%]'>
+              <div
+                className={`${!played && 'bg-blue-950 border-blue-950'} 
+                  ${computerPaper && 'border-blue-800 bg-white'} ${
+                  computerRock && 'border-red-500 bg-white'
+                } ${
+                  computerScissors && 'border-yellow-500 bg-white'
+                }  w-[120px] h-[120px] rounded-full  flex items-center justify-center border-[10px]`}
+              >
+                {computerPaper && <Paper />}
+                {computerRock && <Rock />}
+                {computerScissors && <Scissors />}
+              </div>
+              <div className='w-full flex justify-center'>
+                <p className='text-white font-semibold text[14px] mt-5'>
+                  THE HOUSE PLAYED
+                </p>
+              </div>
+            </div>
           </div>
         )}
 

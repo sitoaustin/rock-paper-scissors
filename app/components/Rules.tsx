@@ -10,24 +10,31 @@ export default function Rules({
   setRules: (rules: boolean) => void;
 }) {
   return (
-    <div className='w-full min-h-screen bg-white absolute top-0 flex items-center p-5 flex-col'>
-      <h1 className='font-semibold text-[30px] mt-10 mb-20'>RULES</h1>
-      <Image
-        src={GameRule}
-        alt='game rules'
-        width={500}
-        height={500}
-        className='w-full'
-      />
-      <button className='p-3' onClick={() => setRules(!rules)}>
+    <div className='absolute top-0 w-full h-screen flex items-center justify-center'>
+      <div className='relative w-full h-screen bg-white  flex items-center p-5 lg:p-0 flex-col lg:justify-center lg:w-[500px] lg:h-[500px] lg:rounded-md'>
+        <h1 className='font-semibold text-[30px] mt-10 mb-20 lg:absolute lg:left-0 lg:p-10 lg:top-0 lg:mt-0'>
+          RULES
+        </h1>
         <Image
-          src={CloseIcon}
-          alt='close icon'
+          src={GameRule}
+          alt='game rules'
           width={500}
           height={500}
-          className='w-[20px] mt-20'
+          className='w-full lg:w-[300px]'
         />
-      </button>
+        <button
+          className='p-3 mt-20 lg:absolute lg:right-0 lg:top-0 lg:mt-0 lg:p-12'
+          onClick={() => setRules(!rules)}
+        >
+          <Image
+            src={CloseIcon}
+            alt='close icon'
+            width={500}
+            height={500}
+            className='w-[20px] '
+          />
+        </button>
+      </div>
     </div>
   );
 }
